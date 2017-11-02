@@ -1,0 +1,17 @@
+# HowTo: write mode
+with open("mylist.txt", "w+") as f:
+    f.write("{}".format(rpgUser))
+
+# HowTo: read mode
+with open("mylist.txt", "r") as f:
+    rd = f.readline()
+print(rd)
+
+
+def handle_channel_join(event):
+    print("Status change for ", event['user'])
+    rpgUser["user"] = event["user"]
+    rpgUser["start"] = event["ts"]
+    if rpgUser["start"] != None:
+        rpgUser["total"] = (event["ts"] - rpgUser["start"]) + rpgUser["total"]
+        rpgUser["start"] = None
