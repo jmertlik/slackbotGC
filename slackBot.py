@@ -16,11 +16,20 @@ rpgUser = {
 
 def handle_channel_join(event):
     print("Status change for ", event['user'])
+    print("They are now ", event['presence'])
+    print("Time is: ", time.time())
+    if event['presence'] == 'active':
+        rpgUser ["user"] = event["user"]
+        rpgUser ["start"] = time.time()
+    else:
+        rpgUser ["total"] = rpgUser ["total"] + (time.time() - rpgUser ["start"])
+        print("They are gone ", rpgUser ["total"])
+
     #print("Current time stamp is: ", event['ts'])
-    rpgUser ["user"] = event ["user"]
-    rpgUser ["start"] = 10001.1
-    if rpgUser ["start"] != None:
-        rpgUser ["total"] = ( 10001.1 - rpgUser ["start"] ) + rpgUser ["total"]
+    # rpgUser ["user"] = event ["user"]
+    # rpgUser ["start"] = 10001.1
+    # if rpgUser ["start"] != None:
+    #     rpgUser ["total"] = ( 10001.1 - rpgUser ["start"] ) + rpgUser ["total"]
 
 if sc.rtm_connect():
     while True:
