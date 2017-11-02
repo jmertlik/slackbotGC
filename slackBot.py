@@ -8,8 +8,6 @@ load_dotenv('.env')
 slack_token = os.environ["SLACK_API_TOKEN"]
 sc = SlackClient(slack_token)
 
-
-
 rpgUser = {
     "user": None,
     "start": None,
@@ -18,14 +16,11 @@ rpgUser = {
 
 def handle_channel_join(event):
     print("Status change for ", event['user'])
+    #print("Current time stamp is: ", event['ts'])
     rpgUser ["user"] = event ["user"]
-    rpgUser ["start"] = event ["ts"]
-        if start != None:
-            rpgUser ["total"] = ( event ["ts"] - rpgUser ["start"] ) + rpgUser ["total"]
-            rpgUser["start"] = None
-
-
-
+    rpgUser ["start"] = 10001.1
+    if rpgUser ["start"] != None:
+        rpgUser ["total"] = ( 10001.1 - rpgUser ["start"] ) + rpgUser ["total"]
 
 if sc.rtm_connect():
     while True:
