@@ -11,7 +11,7 @@ sc = SlackClient(slack_token)
 rpgUser = {
     "user": None,
     "start": None,
-    "total": None
+    "total": 0
 } #dictionary name, start time, end time, total time
 
 def handle_channel_join(event):
@@ -22,7 +22,7 @@ def handle_channel_join(event):
         rpgUser ["user"] = event["user"]
         rpgUser ["start"] = time.time()
     else:
-        rpgUser ["total"] = rpgUser ["total"] + (time.time() - rpgUser ["start"])
+        rpgUser ["total"] = float(rpgUser ["total"]) + (float(time.time()) - float(rpgUser ["start"]))
         print("They are gone ", rpgUser ["total"])
 
     #print("Current time stamp is: ", event['ts'])
@@ -45,13 +45,3 @@ if sc.rtm_connect():
                     )
             elif event ["type"] == "presence_change":
                 handle_channel_join(event)        
-
-
-
-#if text is hello, then reply hi!
-
-# if event.
-#   time.sleep(1)
-
-# else:
-#      print("Connection Failed")
