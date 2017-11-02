@@ -20,28 +20,29 @@ def handle_channel_join(event):
     print("Time is: ", time.time())
     if event['presence'] == 'active':
         rpgUser ["user"] = event["user"]
+        #i = len(user_list)
+        #user_list[i] = rpgUser ["user"]
         rpgUser ["start"] = time.time()
+        for person in users:
+            print(person["name"])
     else:
         rpgUser ["total"] = float(rpgUser ["total"]) + (float(time.time()) - float(rpgUser ["start"]))
         print("They are gone ", rpgUser ["total"])
 
-    #print("Current time stamp is: ", event['ts'])
-    # rpgUser ["user"] = event ["user"]
-    # rpgUser ["start"] = 10001.1
-    # if rpgUser ["start"] != None:
-    #     rpgUser ["total"] = ( 10001.1 - rpgUser ["start"] ) + rpgUser ["total"]
 
 if sc.rtm_connect():
     while True:
         events = sc.rtm_read()
+        
+        users = sc.api_call("users.list")
 
         for event in events:
             if event ["type"] == "message":
-                if event ["text"] == "list users":
+                if event ["text"] == "waddayaat":
                     sc.api_call(
                         "chat.postMessage",
                         channel=event ["channel"], 
-                        text="hello"
+                        #text= user_list
                     )
             elif event ["type"] == "presence_change":
                 handle_channel_join(event)        
